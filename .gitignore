@@ -12,6 +12,7 @@ vendor/
 *.out
 coverage.out
 coverage.html
+/out
 
 .env
 
