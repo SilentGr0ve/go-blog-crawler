@@ -5,6 +5,7 @@ PLAN.md
 
 bin/
 dist/
+build/
 vendor/
 *.exe
 *.exe~
@@ -12,6 +13,12 @@ vendor/
 *.out
 coverage.out
 coverage.html
+
+# Compiled binaries (from `go build` without -o and `go run`).
+/crawler
+/main
+
+# Local log output.
 /out
 
 .env
