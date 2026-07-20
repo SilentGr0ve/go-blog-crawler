@@ -1,0 +1,5 @@
+https://go.dev/blog/
+https://blog.gopheracademy.com/
+https://www.alexedwards.net/blog/
+https://dave.cheney.net/
+https://eli.thegreenplace.net/
