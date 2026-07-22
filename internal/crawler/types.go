@@ -4,10 +4,7 @@ type Job struct {
 	URL   string
 	Depth int
 }
-
-type Page struct {
+type Result struct {
 	URL   string
 	Title string
-	Text  string
-	Links []string
 }
