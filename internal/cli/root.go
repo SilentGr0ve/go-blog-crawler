@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	opts      CLIOptions
-	appLogger *logger.Logger
+	cliOptions CLIOptions
+	appLogger  *logger.Logger
 )
 
 var rootCmd = &cobra.Command{
@@ -18,8 +18,8 @@ var rootCmd = &cobra.Command{
 	Long:  "go-blog-crawler is a concurrent web crawler that discovers and fetches Go-related blog pages, respects robots.txt, and exports results to JSON",
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		loggerConfig := logger.Config{
-			Level:  opts.LogLevel,
-			Folder: opts.LogDir,
+			Level:  cliOptions.LogLevel,
+			Folder: cliOptions.LogDir,
 		}
 
 		l, err := logger.NewLogger(loggerConfig)
@@ -43,14 +43,14 @@ func Execute() error {
 
 func init() {
 	rootCmd.PersistentFlags().StringVar(
-		&opts.LogLevel,
+		&cliOptions.LogLevel,
 		"log-level",
 		"info",
 		"log level (debug|info|warn|error)",
 	)
 
 	rootCmd.PersistentFlags().StringVar(
-		&opts.LogDir,
+		&cliOptions.LogDir,
 		"log-dir",
 		"",
 		"directory for log files (if empty = stderr only)",
