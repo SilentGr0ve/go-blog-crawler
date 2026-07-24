@@ -24,9 +24,9 @@ var crawlCmd = &cobra.Command{
 		if err != nil {
 			return fmt.Errorf("read seeds: %w", err)
 		}
+
 		f := fetcher.NewClient(fetcher.Options{Timeout: 10 * time.Second})
-		//c := crawler.NewSequential(f, appLogger)
-		workerPool := crawler.NewWorkerPool(f, appLogger, 5)
+		workerPool := crawler.NewWorkerPool(f, appLogger, crawlOptions.Workers)
 
 		results, err := workerPool.Run(
 			cmd.Context(),
@@ -34,14 +34,6 @@ var crawlCmd = &cobra.Command{
 				MaxDepth: crawlOptions.MaxDepth,
 				MaxPages: crawlOptions.MaxPages,
 			})
-		//results, err := c.Run(
-		//	cmd.Context(),
-		//	seeds,
-		//	crawler.Options{
-		//		MaxDepth: crawlOptions.MaxDepth,
-		//		MaxPages: crawlOptions.MaxPages,
-		//	},
-		//)
 		if err != nil {
 			return fmt.Errorf("crawler: %w", err)
 		}
@@ -62,6 +54,7 @@ func init() {
 	crawlCmd.Flags().StringVar(&crawlOptions.Seeds, "seeds", "seeds.txt", "path to seeds file")
 	crawlCmd.Flags().IntVar(&crawlOptions.MaxPages, "max-pages", 50, "max pages to visit (0 = unlimited)")
 	crawlCmd.Flags().IntVar(&crawlOptions.MaxDepth, "depth", 1, "max crawl depth")
+	crawlCmd.Flags().IntVar(&crawlOptions.Workers, "concurrency", 5, "count of crawl workers")
 }
 
 func readLines(seedsPath string) ([]string, error) {

@@ -9,4 +9,5 @@ type CrawlOptions struct {
 	Seeds    string
 	MaxPages int
 	MaxDepth int
+	Workers  int
 }
