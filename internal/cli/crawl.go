@@ -25,16 +25,23 @@ var crawlCmd = &cobra.Command{
 			return fmt.Errorf("read seeds: %w", err)
 		}
 		f := fetcher.NewClient(fetcher.Options{Timeout: 10 * time.Second})
-		c := crawler.NewSequential(f, appLogger)
+		//c := crawler.NewSequential(f, appLogger)
+		workerPool := crawler.NewWorkerPool(f, appLogger, 5)
 
-		results, err := c.Run(
+		results, err := workerPool.Run(
 			cmd.Context(),
-			seeds,
-			crawler.Options{
+			seeds, crawler.Options{
 				MaxDepth: crawlOptions.MaxDepth,
 				MaxPages: crawlOptions.MaxPages,
-			},
-		)
+			})
+		//results, err := c.Run(
+		//	cmd.Context(),
+		//	seeds,
+		//	crawler.Options{
+		//		MaxDepth: crawlOptions.MaxDepth,
+		//		MaxPages: crawlOptions.MaxPages,
+		//	},
+		//)
 		if err != nil {
 			return fmt.Errorf("crawler: %w", err)
 		}
